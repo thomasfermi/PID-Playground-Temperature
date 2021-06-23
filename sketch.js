@@ -83,6 +83,10 @@ let slider_d;
 
 // layout for plotly plot
 let layout = {
+  showlegend: false,
+  font: {
+    size: 18
+  },
   title: '',
   xaxis: {
     title: 'Time',
@@ -118,6 +122,7 @@ function setup(){
   slider_p.parent(group_p);
   slider_p_text = createSpan();
   slider_p_text.parent(group_p);
+  slider_p_text.style('font-size', '18px');
   
   group_i = createDiv('');
   group_i.parent(super_group);
@@ -127,6 +132,7 @@ function setup(){
   slider_i.parent(group_i);
   slider_i_text = createSpan();
   slider_i_text.parent(group_i);
+  slider_i_text.style('font-size', '18px');
   
   group_d = createDiv('');
   group_d.parent(super_group);
@@ -136,6 +142,7 @@ function setup(){
   slider_d.parent(group_d);
   slider_d_text = createSpan();
   slider_d_text.parent(group_d);
+  slider_d_text.style('font-size', '18px');
   
   controller = new PID(0,0,0,T_desired);
   states = run_temp_sim(controller);  
