@@ -105,39 +105,42 @@ function re_run_sim() {
 
 
 function setup(){
+  createCanvas(windowWidth, windowHeight);
 
   super_group = createDiv('');
-  super_group.position(10, 10);
   
-  group_p = createSpan('');
+  super_group.style('width', '100%')
+  
+  group_p = createDiv('');
   group_p.parent(super_group);
   slider_p = createSlider(0,10000, 0);
-  slider_p.style('width', '80px');
+  slider_p.style('width', '50%');
   slider_p.input(re_run_sim);
   slider_p.parent(group_p);
-  slider_p_text = createSpan()
+  slider_p_text = createSpan();
   slider_p_text.parent(group_p);
   
-  group_i = createSpan('');
+  group_i = createDiv('');
   group_i.parent(super_group);
   slider_i = createSlider(0,2000, 0);
-  slider_i.style('width', '80px');
+  slider_i.style('width', '50%');
   slider_i.input(re_run_sim);
   slider_i.parent(group_i);
-  slider_i_text = createSpan()
+  slider_i_text = createSpan();
   slider_i_text.parent(group_i);
-
-  group_d = createSpan('');
+  
+  group_d = createDiv('');
   group_d.parent(super_group);
   slider_d = createSlider(-30,30, 0);  
-  slider_d.style('width', '80px');
+  slider_d.style('width', '50%');
   slider_d.input(re_run_sim);
   slider_d.parent(group_d);
-  slider_d_text = createSpan()
+  slider_d_text = createSpan();
   slider_d_text.parent(group_d);
   
   controller = new PID(0,0,0,T_desired);
   states = run_temp_sim(controller);  
+
 }
 
 function my_display_float(x,n) { // simple helper
@@ -159,11 +162,18 @@ function draw() {
     name : 'T_desired',
     type: 'line'
   };
+  
+  super_group.position(0.25*width,0);
 
   slider_p_text.html('  Kp = '+my_display_float(slider_p.value()/10000.0,2)+ ' ');
   slider_i_text.html('  Ki = '+my_display_float(slider_i.value()/10000.0,2)+ ' ');
   slider_d_text.html('  Kd = '+my_display_float(slider_d.value()/10000.0,4));
     
-  p = Plotly.newPlot('myDiv', [trace_T, trace_T_desired], layout,{displayModeBar: false});
+  p = Plotly.newPlot('myDiv', [trace_T_desired,trace_T], layout,{displayModeBar: false});
 
+}
+
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
