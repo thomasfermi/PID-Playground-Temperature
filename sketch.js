@@ -105,6 +105,27 @@ function re_run_sim() {
                        slider_d.value()/10000.0,
                        T_desired);
   states = run_temp_sim(controller);
+  var trace_T = {
+    x: states[0],
+    y: states[1],
+    name : 'T',
+    type: 'line'
+  };
+  
+  var trace_T_desired = {
+    x: states[0],
+    y: Array(states[0].length).fill(T_desired),
+    name : 'T_desired',
+    type: 'line'
+  };
+  
+  super_group.position(0.25*windowWidth,0);
+
+  slider_p_text.html('  Kp = '+my_display_float(slider_p.value()/10000.0,2)+ ' ');
+  slider_i_text.html('  Ki = '+my_display_float(slider_i.value()/10000.0,2)+ ' ');
+  slider_d_text.html('  Kd = '+my_display_float(slider_d.value()/10000.0,4));
+    
+  p = Plotly.newPlot('myDiv', [trace_T_desired,trace_T], layout,{displayModeBar: false});
 }
 
 
@@ -143,10 +164,9 @@ function setup(){
   slider_d_text = createSpan();
   slider_d_text.parent(group_d);
   slider_d_text.style('font-size', '18px');
-  
-  controller = new PID(0,0,0,T_desired);
-  states = run_temp_sim(controller);  
-  frameRate(7);
+  frameRate(30);
+  re_run_sim();  
+
 }
 
 function my_display_float(x,n) { // simple helper
@@ -155,26 +175,5 @@ function my_display_float(x,n) { // simple helper
 
 
 function draw() {    
-  var trace_T = {
-    x: states[0],
-    y: states[1],
-    name : 'T',
-    type: 'line'
-  };
-  
-  var trace_T_desired = {
-    x: states[0],
-    y: Array(states[0].length).fill(T_desired),
-    name : 'T_desired',
-    type: 'line'
-  };
-  
-  super_group.position(0.25*windowWidth,0);
-
-  slider_p_text.html('  Kp = '+my_display_float(slider_p.value()/10000.0,2)+ ' ');
-  slider_i_text.html('  Ki = '+my_display_float(slider_i.value()/10000.0,2)+ ' ');
-  slider_d_text.html('  Kd = '+my_display_float(slider_d.value()/10000.0,4));
-    
-  p = Plotly.newPlot('myDiv', [trace_T_desired,trace_T], layout,{displayModeBar: false});
 
 }
