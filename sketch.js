@@ -146,7 +146,7 @@ function setup(){
   
   controller = new PID(0,0,0,T_desired);
   states = run_temp_sim(controller);  
-
+  frameRate(7);
 }
 
 function my_display_float(x,n) { // simple helper
