@@ -105,7 +105,6 @@ function re_run_sim() {
 
 
 function setup(){
-  createCanvas(windowWidth, windowHeight);
 
   super_group = createDiv('');
   
@@ -163,7 +162,7 @@ function draw() {
     type: 'line'
   };
   
-  super_group.position(0.25*width,0);
+  super_group.position(0.25*windowWidth,0);
 
   slider_p_text.html('  Kp = '+my_display_float(slider_p.value()/10000.0,2)+ ' ');
   slider_i_text.html('  Ki = '+my_display_float(slider_i.value()/10000.0,2)+ ' ');
@@ -171,9 +170,4 @@ function draw() {
     
   p = Plotly.newPlot('myDiv', [trace_T_desired,trace_T], layout,{displayModeBar: false});
 
-}
-
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
 }
